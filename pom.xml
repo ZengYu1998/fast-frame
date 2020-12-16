@@ -12,6 +12,7 @@
     <modules>
         <module>web</module>
         <module>generator</module>
+        <module>common</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -148,10 +149,23 @@
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${user-agent.version}</version>
             </dependency>
-
         </dependencies>
-
-
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!--热部署配置-->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--fork:如果没有该项配置,整个devtools不会起作用-->
+                    <fork>true</fork>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>
