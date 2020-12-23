@@ -15,10 +15,7 @@ public class StringUtil {
      * @return 空返回 true 否则 false
      */
     public static boolean isEmpty(String string){
-        if(string==null || string.trim().equals("")){
-            return true;
-        }
-        return false;
+        return string == null || string.trim().equals("");
     }
 
 }

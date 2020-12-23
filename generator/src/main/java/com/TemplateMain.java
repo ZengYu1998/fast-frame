@@ -26,8 +26,13 @@ import java.util.Properties;
  **/
 public class TemplateMain {
     public static void main(String[] args) throws Exception {
+        createTemple();
+    }
 
-        Properties pro=getCongig();
+
+
+    private static void createTemple() throws Exception{
+        Properties pro=getConfig();
         String author=pro.getProperty("author");
         boolean fileOverride= Boolean.parseBoolean(pro.getProperty("fileOverride"));
         boolean openSwagger2=Boolean.parseBoolean(pro.getProperty("openSwagger2"));
@@ -60,7 +65,7 @@ public class TemplateMain {
                 .setBaseResultMap(true)
                 .setBaseColumnList(true)
                 .setMapperName("%s"+MapperName);
-               
+
 
         //数据源配置
         DataSourceConfig dbConfig = new DataSourceConfig();
@@ -142,10 +147,14 @@ public class TemplateMain {
         //执行
         autoGenerator.execute();
         deleteDir(new File(projectPath+"/src/main/java/"+parent.replaceAll("\\.","/")+"/null"));
-
     }
 
-    public static Properties getCongig() throws Exception{
+    /**
+     * 获取配置
+     * @return 配置类
+     * @throws Exception 读取配置失败
+     */
+    private static Properties getConfig() throws Exception{
         ClassLoader classLoader = TemplateMain.class.getClassLoader();
         URL resourceUrl = classLoader.getResource("config.properties");
         String path = resourceUrl.getPath();
@@ -159,9 +168,7 @@ public class TemplateMain {
     /**
      * 递归删除目录下的所有文件及子目录下所有文件
      * @param dir 将要删除的文件目录
-     * @return boolean Returns "true" if all deletions were successful.
-     *                 If a deletion fails, the method stops attempting to
-     *                 delete and returns "false".
+     * @return boolean true 删除成功 false 删除失败
      */
     private static boolean deleteDir(File dir) {
         if (dir.isDirectory()) {
